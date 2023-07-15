@@ -4,7 +4,7 @@ import { router } from './Routes/Routes/Routes';
 
 function App() {
   return (
-    <div>
+    <div data-theme='light'>
       <RouterProvider router={router}>
 
       </RouterProvider>
