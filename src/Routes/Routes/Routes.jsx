@@ -5,6 +5,7 @@ import SingleProduct from "../../Pages/SingleProduct/SingleProduct";
 import Login from "../../Pages/Login/Login";
 import Singup from "../../Pages/Singup/Singup";
 import CheckOut from "../../CheckOut/CheckOut";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
 export const router = createBrowserRouter([
     {
@@ -29,7 +30,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/checkout',
-                element: <CheckOut></CheckOut>
+                element: <PrivateRoute><CheckOut></CheckOut></PrivateRoute>
             }
         ]
     }

@@ -14,7 +14,7 @@ const SingleProduct = () => {
             .then(res => res.json())
             .then(data => {
                 window.scrollTo(0, 0)
-                console.log(data);
+                // console.log(data);
                 setProduct(data);
             })
     }, [id])

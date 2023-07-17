@@ -1,14 +1,38 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaArrowLeft, FaEye, FaEyeSlash } from 'react-icons/fa';
+import { UserContext } from '../../contexts/UserProvider/UserProvider';
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(true);
     const { register, handleSubmit, formState: { errors }, } = useForm();
+    const { setUserId, setUser } = useContext(UserContext);
+    const [error, setError] = useState()
+    const navigate = useNavigate();
+
+    const location = useLocation();
+    let from = location.state?.from?.pathname || "/";
 
     const onSubmit = (data) => {
-        console.log(data)
+
+        fetch('http://localhost:5000/userlogin', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data?.acknowledged) {
+                    setUser(data?.userDetails)
+                    setUserId(data?.userDetails?._id)
+                    localStorage.setItem('userId', data?.userDetails?._id)
+                    navigate(from, { replace: true });
+                }
+                setError(data?.message)
+            })
 
     }
 
@@ -46,8 +70,8 @@ const Login = () => {
                             </div>
                             <input type="submit" value='Login' className='py-2 px-3 bg-success rounded-md w-full mt-5 font-semibold ' />
                         </form>
-
-                        <button className='text-sky font-medium mt-2 hover:text-success duration-300'>Forgot password?</button>
+                        <p className='text-red-600 font-medium mt-2  duration-300'>{error && error}</p>
+                        {/* <button className='text-sky font-medium mt-2 hover:text-success duration-300'>Forgot password?</button> */}
                         <p className='text-center font-semibold mt-8'>Don't have an account? <Link to='/signup' className='text-success font-semibold hover:text-accent duration-300'> Sign Up</Link></p>
                     </div>
 
