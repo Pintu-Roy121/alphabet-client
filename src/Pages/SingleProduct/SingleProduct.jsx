@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const SingleProduct = () => {
     const [product, setProduct] = useState();
-    const [quantiy, setQuantity] = useState(1)
-    const { id } = useParams()
+    const [quantiy, setQuantity] = useState(1);
+    const [updatePrice, setUpdatePrice] = useState(product?.price)
+    const [size, setSize] = useState(40)
+    const { id } = useParams();
+    const navigate = useNavigate()
+
     useEffect(() => {
         fetch(`http://localhost:5000/product/${id}`)
             .then(res => res.json())
@@ -18,15 +22,57 @@ const SingleProduct = () => {
     const quantityDecrese = () => {
         if (quantiy <= 1) {
             setQuantity(1)
+            // setUpdatePrice(updatePrice)
             return;
         }
         setQuantity(quantiy - 1)
+        // setUpdatePrice(updatePrice * quantiy)
     }
 
     const quantityIncrease = () => {
         setQuantity(quantiy + 1)
+        // setUpdatePrice(updatePrice * quantiy)
     }
 
+    const handleSize = (size) => {
+        setSize(size)
+        if (size === 40) {
+            setUpdatePrice(product?.price)
+        }
+        else if (size === 41) {
+            setUpdatePrice(product?.price + 20)
+        }
+        else if (size === 42) {
+            setUpdatePrice(product?.price + 40)
+        }
+        else if (size === 43) {
+            setUpdatePrice(product?.price + 50)
+        }
+        else if (size >= 44) {
+            setUpdatePrice(product?.price + 60)
+        }
+
+    }
+
+    const updateProduct = {
+        category: product?.category,
+        img: product?.img,
+        name: product?.name,
+        price: updatePrice ? updatePrice * quantiy : product?.price * quantiy,
+        productPrice: product?.price,
+        quantity: quantiy,
+        ratings: product?.ratings,
+        ratingsCount: product?.ratingsCount,
+        seller: product?.seller,
+        shipping: quantiy >= 2 ? product?.shipping * 2 : product?.shipping,
+        size: size && size,
+        stock: product?.stock - quantiy,
+        _id: product?._id
+    }
+    const handleOrder = () => {
+        navigate('/checkout')
+        localStorage.setItem('product', JSON.stringify(updateProduct))
+    }
     const sizes = [40, 41, 42, 43, 44, 45]
 
     return (
@@ -42,7 +88,7 @@ const SingleProduct = () => {
                         <div>
                             <h2>Rating:{'  '} {product?.ratings}</h2>
                         </div>
-                        <p className='text-2xl font-semibold mt-5'>Price: {product?.price} $</p>
+                        <p className='text-2xl font-semibold mt-5'>Price: {updatePrice ? updatePrice * quantiy : product?.price * quantiy} $</p>
 
                         <div className='flex gap-4 items-center mt-5'>
                             <p className='text-xl font-semibold'>Quantity:</p>
@@ -58,14 +104,14 @@ const SingleProduct = () => {
                             <div className='w-full grid grid-cols-4 gap-3'>
                                 {
                                     sizes?.map((size, i) =>
-                                        <button className='py-1 px-2 hover:border-orange-700 focus:border-orange-700 text-lg border'>{size}</button>
+                                        <button key={i} onClick={() => handleSize(size)} className='py-1 px-2 hover:border-orange-700 focus:border-orange-700 text-lg border'>{size}</button>
                                     )
                                 }
                             </div>
                         </div>
 
                         <div className='flex gap-2 mt-10'>
-                            <button className='btn btn-wide btn-success'>Buy Now</button>
+                            <button onClick={handleOrder} className='btn btn-wide btn-success'>Buy Now</button>
                             <button className='btn btn-wide btn-secondary'>Add to Cart</button>
                         </div>
                     </div>
