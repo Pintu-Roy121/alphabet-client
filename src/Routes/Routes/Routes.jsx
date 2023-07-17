@@ -6,6 +6,8 @@ import Login from "../../Pages/Login/Login";
 import Singup from "../../Pages/Singup/Singup";
 import CheckOut from "../../CheckOut/CheckOut";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
+import OrderPage from "../../Pages/OrderPage/OrderPage";
+import AddToCart from "../../AddToCart/AddToCart";
 
 export const router = createBrowserRouter([
     {
@@ -31,6 +33,14 @@ export const router = createBrowserRouter([
             {
                 path: '/checkout',
                 element: <PrivateRoute><CheckOut></CheckOut></PrivateRoute>
+            },
+            {
+                path: '/orderlist',
+                element: <OrderPage></OrderPage>
+            },
+            {
+                path: '/addtocart',
+                element: <PrivateRoute><AddToCart></AddToCart></PrivateRoute>
             }
         ]
     }

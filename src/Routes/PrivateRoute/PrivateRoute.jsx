@@ -3,9 +3,8 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { UserContext } from '../../contexts/UserProvider/UserProvider';
 
 const PrivateRoute = ({ children }) => {
-    const { user, loading } = useContext(UserContext);
+    const { user, } = useContext(UserContext);
     const location = useLocation();
-    console.log(user);
 
     if (user) {
         return children;

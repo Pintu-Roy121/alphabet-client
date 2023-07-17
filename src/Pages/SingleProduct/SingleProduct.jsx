@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { UserContext } from '../../contexts/UserProvider/UserProvider';
 
 const SingleProduct = () => {
     const [product, setProduct] = useState();
     const [quantiy, setQuantity] = useState(1);
     const [updatePrice, setUpdatePrice] = useState(product?.price)
-    const [size, setSize] = useState(40)
+    const [size, setSize] = useState(40);
+    const { user } = useContext(UserContext);
     const { id } = useParams();
     const navigate = useNavigate()
 
@@ -73,6 +75,43 @@ const SingleProduct = () => {
         navigate('/checkout')
         localStorage.setItem('product', JSON.stringify(updateProduct))
     }
+
+    const handleCart = () => {
+        const cartProduct = {
+            category: product?.category,
+            img: product?.img,
+            name: product?.name,
+            price: product?.price,
+            quantity: quantiy,
+            ratings: product?.ratings,
+            ratingsCount: product?.ratingsCount,
+            seller: product?.seller,
+            shipping: product?.shipping,
+            size: size && size,
+            stock: product?.stock,
+            p_id: product?._id,
+            u_id: user?._id
+        }
+        if (user) {
+            fetch('http://localhost:5000/addtocart', {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(cartProduct)
+            })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
+                    if (data?.acknowledged) {
+                        navigate('/addtocart')
+                    }
+                })
+            return
+        }
+        navigate('/addtocart')
+    }
+
     const sizes = [40, 41, 42, 43, 44, 45]
 
     return (
@@ -112,7 +151,7 @@ const SingleProduct = () => {
 
                         <div className='flex gap-2 mt-10'>
                             <button onClick={handleOrder} className='btn btn-wide btn-success'>Buy Now</button>
-                            <button className='btn btn-wide btn-secondary'>Add to Cart</button>
+                            <button onClick={handleCart} className='btn btn-wide btn-secondary'>Add to Cart</button>
                         </div>
                     </div>
                 </div>

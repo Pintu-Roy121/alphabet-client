@@ -10,12 +10,17 @@ const Login = () => {
     const { setUserId, setUser } = useContext(UserContext);
     const [error, setError] = useState()
     const navigate = useNavigate();
+    const { user } = useContext(UserContext);
 
     const location = useLocation();
     let from = location.state?.from?.pathname || "/";
 
-    const onSubmit = (data) => {
+    if (user) {
+        navigate(from, { replace: true });
+        return
+    }
 
+    const onSubmit = (data) => {
         fetch('http://localhost:5000/userlogin', {
             method: 'POST',
             headers: {
