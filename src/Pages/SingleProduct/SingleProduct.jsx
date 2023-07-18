@@ -7,7 +7,7 @@ const SingleProduct = () => {
     const [quantiy, setQuantity] = useState(1);
     const [updatePrice, setUpdatePrice] = useState(product?.price)
     const [size, setSize] = useState(40);
-    const { user } = useContext(UserContext);
+    const { user, setRefresh, refresh } = useContext(UserContext);
     const { id } = useParams();
     const navigate = useNavigate()
 
@@ -104,6 +104,7 @@ const SingleProduct = () => {
                 .then(data => {
                     console.log(data);
                     if (data?.acknowledged) {
+                        setRefresh(!refresh)
                         navigate('/addtocart')
                     }
                 })

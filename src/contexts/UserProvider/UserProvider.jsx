@@ -1,9 +1,10 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useState } from 'react';
 
 
 export const UserContext = createContext();
 const UserProvider = ({ children }) => {
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(true);
+    const [refresh, setRefresh] = useState(true)
     const [user, setUser] = useState(null);
     const [userId, setUserId] = useState();
     const id = localStorage.getItem('userId');
@@ -26,7 +27,7 @@ const UserProvider = ({ children }) => {
 
     // useEffect(() => {
     //     if (!user) {
-    //         fetch(`http://localhost:5000/user/${id}`)
+    //         fetch(`http://localhost:5000 /user/${id}`)
     //             .then(res => res.json())
     //             .then(data => {
     //                 console.log(data);
@@ -43,7 +44,7 @@ const UserProvider = ({ children }) => {
 
 
 
-    const userInfo = { user, setUserId, setUser, loading }
+    const userInfo = { user, setUserId, setUser, loading, setRefresh, refresh }
     return (
         <UserContext.Provider value={userInfo}>
             {children}

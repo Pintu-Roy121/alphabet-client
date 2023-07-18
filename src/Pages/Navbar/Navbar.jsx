@@ -4,11 +4,13 @@ import { UserContext } from '../../contexts/UserProvider/UserProvider';
 import { FaShoppingCart, FaLuggageCart } from 'react-icons/fa';
 
 const Navbar = () => {
-    const { user } = useContext(UserContext);
+    const { user, refresh } = useContext(UserContext);
     const [orderList, setOrderList] = useState([])
     const [cartList, setcartList] = useState([])
     const nagigate = useNavigate()
 
+
+    // Get all Order Product------------------
     useEffect(() => {
         fetch(`http://localhost:5000/orderlist/${user?._id}`)
             .then(res => res.json())
@@ -16,8 +18,10 @@ const Navbar = () => {
                 // console.log(data);
                 setOrderList(data)
             })
-    }, [user?._id])
+    }, [user?._id, refresh])
 
+
+    // Get all Cart Product----------------
     useEffect(() => {
         fetch(`http://localhost:5000/allcart/${user?._id}`)
             .then(res => res.json())
@@ -25,7 +29,7 @@ const Navbar = () => {
                 // console.log(data);
                 setcartList(data)
             })
-    }, [user?._id])
+    }, [user?._id, refresh])
 
     const handleLogout = () => {
         localStorage.removeItem('userId');

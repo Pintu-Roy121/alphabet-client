@@ -5,13 +5,12 @@ import { UserContext } from '../contexts/UserProvider/UserProvider';
 
 const CheckOut = () => {
     const [product, setProduct] = useState();
-    const { user } = useContext(UserContext);
+    const { user, setRefresh, refresh } = useContext(UserContext);
     const navigate = useNavigate()
 
     useEffect(() => {
         const productJson = localStorage.getItem('product')
         const product = JSON.parse(productJson)
-        // console.log(product);
         setProduct(product)
     }, [])
 
@@ -23,7 +22,7 @@ const CheckOut = () => {
             name: product?.name,
             price: product?.price,
             productPrice: product?.productPrice,
-            quantity: product?.quantiy,
+            quantity: product?.quantity,
             ratings: product?.ratings,
             ratingsCount: product?.ratingsCount,
             seller: product?.seller,
@@ -34,6 +33,7 @@ const CheckOut = () => {
             u_id: user?._id
         }
 
+        console.log(orderProduct);
 
         fetch('http://localhost:5000/order', {
             method: 'POST',
@@ -44,8 +44,8 @@ const CheckOut = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 if (data?.acknowledged) {
+                    setRefresh(!refresh)
                     alert('Order Completed')
                     localStorage.removeItem('product')
                     navigate('/')
