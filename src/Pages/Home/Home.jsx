@@ -2,15 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const Home = () => {
-    const [products, setProducts] = useState([])
+    const [products, setProducts] = useState([]);
+
+    // Get All Product----------------------------
     useEffect(() => {
-        fetch('http://localhost:5000/products')
+        fetch('https://alphabet-task-server.vercel.app/products')
             .then(res => res.json())
             .then(data => {
                 // console.log(data);
                 setProducts(data);
             })
     }, [])
+
     return (
         <div className='w-4/5 mx-auto mt-5 min-h-screen'>
             <div className='grid grid-cols-4 gap-5'>

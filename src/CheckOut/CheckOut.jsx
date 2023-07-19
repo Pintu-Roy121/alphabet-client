@@ -35,7 +35,7 @@ const CheckOut = () => {
 
         console.log(orderProduct);
 
-        fetch('http://localhost:5000/order', {
+        fetch('https://alphabet-task-server.vercel.app/order', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

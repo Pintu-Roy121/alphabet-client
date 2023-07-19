@@ -12,7 +12,7 @@ const Navbar = () => {
 
     // Get all Order Product------------------
     useEffect(() => {
-        fetch(`http://localhost:5000/orderlist/${user?._id}`)
+        fetch(`https://alphabet-task-server.vercel.app/orderlist/${user?._id}`)
             .then(res => res.json())
             .then(data => {
                 // console.log(data);
@@ -23,7 +23,7 @@ const Navbar = () => {
 
     // Get all Cart Product----------------
     useEffect(() => {
-        fetch(`http://localhost:5000/allcart/${user?._id}`)
+        fetch(`https://alphabet-task-server.vercel.app/allcart/${user?._id}`)
             .then(res => res.json())
             .then(data => {
                 // console.log(data);

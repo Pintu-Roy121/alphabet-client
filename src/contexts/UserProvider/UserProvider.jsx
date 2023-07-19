@@ -5,12 +5,12 @@ export const UserContext = createContext();
 const UserProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [refresh, setRefresh] = useState(true)
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState();
     const [userId, setUserId] = useState();
     const id = localStorage.getItem('userId');
 
     if (id && !user) {
-        fetch(`http://localhost:5000/user/${id}`)
+        fetch(`https://alphabet-task-server.vercel.app/user/${id}`)
             .then(res => res.json())
             .then(data => {
                 // console.log(data);

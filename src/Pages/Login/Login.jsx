@@ -21,7 +21,7 @@ const Login = () => {
     }
 
     const onSubmit = (data) => {
-        fetch('http://localhost:5000/userlogin', {
+        fetch('https://alphabet-task-server.vercel.app/userlogin', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

@@ -7,7 +7,7 @@ const AddToCart = () => {
     const [cartList, setcartList] = useState([])
 
     useEffect(() => {
-        fetch(`http://localhost:5000/allcart/${user?._id}`)
+        fetch(`https://alphabet-task-server.vercel.app/allcart/${user?._id}`)
             .then(res => res.json())
             .then(data => {
                 setcartList(data)
@@ -17,7 +17,7 @@ const AddToCart = () => {
 
     // Delete Cart------------------
     const hadleCart = (id) => {
-        fetch(`http://localhost:5000/cart-delete/${id}/${user?._id}`, {
+        fetch(`https://alphabet-task-server.vercel.app/cart-delete/${id}/${user?._id}`, {
             method: 'DELETE',
         })
             .then(res => res.json())

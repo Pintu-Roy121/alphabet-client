@@ -8,7 +8,7 @@ const OrderPage = () => {
 
     // Get all order list--------------------------
     useEffect(() => {
-        fetch(`http://localhost:5000/orderlist/${user?._id}`)
+        fetch(`https://alphabet-task-server.vercel.app/orderlist/${user?._id}`)
             .then(res => res.json())
             .then(data => {
                 setOrderList(data)
@@ -17,7 +17,7 @@ const OrderPage = () => {
 
 
     const handleOrderDelete = (id) => {
-        fetch(`http://localhost:5000/order-delete/${id}/${user?._id}`, {
+        fetch(`https://alphabet-task-server.vercel.app/order-delete/${id}/${user?._id}`, {
             method: 'DELETE',
         })
             .then(res => res.json())

@@ -12,7 +12,7 @@ const SingleProduct = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        fetch(`http://localhost:5000/product/${id}`)
+        fetch(`https://alphabet-task-server.vercel.app/product/${id}`)
             .then(res => res.json())
             .then(data => {
                 window.scrollTo(0, 0)
@@ -93,7 +93,7 @@ const SingleProduct = () => {
             u_id: user?._id
         }
         if (user) {
-            fetch('http://localhost:5000/addtocart', {
+            fetch('https://alphabet-task-server.vercel.app/addtocart', {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json'

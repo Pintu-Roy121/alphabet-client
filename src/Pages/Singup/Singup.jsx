@@ -16,7 +16,7 @@ const Singup = () => {
 
     const onSubmit = (data) => {
         console.log(data)
-        fetch('http://localhost:5000/usersignup', {
+        fetch('https://alphabet-task-server.vercel.app/usersignup', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
