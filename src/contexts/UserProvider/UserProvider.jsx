@@ -21,30 +21,9 @@ const UserProvider = ({ children }) => {
             })
     }
 
-    // if (user) {
-    //     setLoading(false)
-    // }
-
-    // useEffect(() => {
-    //     if (!user) {
-    //         fetch(`http://localhost:5000 /user/${id}`)
-    //             .then(res => res.json())
-    //             .then(data => {
-    //                 console.log(data);
-    //                 if (data?._id) {
-    //                     setUser(data);
-    //                     setLoading(false)
-    //                 }
-    //             })
-    //     }
-    //     setLoading(false)
-    // }, [id, user])
 
 
-
-
-
-    const userInfo = { user, setUserId, setUser, loading, setRefresh, refresh }
+    const userInfo = { user, setUserId, userId, setUser, loading, setRefresh, refresh }
     return (
         <UserContext.Provider value={userInfo}>
             {children}
